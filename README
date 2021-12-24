@@ -1,1 +1,1 @@
-# Dotfiles for **Charlie Dedinsky**
+Dotfiles for **Charlie Dedinsky**
