@@ -1,0 +1,15 @@
+alias bat='cat /sys/class/power_supply/BAT0/capacity'
+alias bitwarden='/opt/bitwarden/Bitwarden*.AppImage'
+alias obsidian='/opt/obsidian/Obsidian*.AppImage'
+alias add='git add --all'
+alias commit='git commit -m $1'
+alias push='git push origin'
+alias refresh='add && commit && push'
+br () {
+    echo $((960*$1)) > /sys/class/backlight/intel_backlight/brightness
+}
+alias node0='ssh pi@192.168.1.100'
+alias node1='ssh pi@192.168.1.101'
+alias master='ssh user@192.168.1.200 -p 2022'
+alias vim='nvim'
+alias invert='xcalib -i -a'
