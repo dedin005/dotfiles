@@ -18,4 +18,6 @@ set cursorline              " highlight current cursorline
 set ttyfast                 " Speed up scrolling in Vim
 
 imap jk <Esc>
+imap kj <Esc>
 nnoremap ; :
+nmap <F9> :nohl
