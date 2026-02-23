@@ -1,5 +1,29 @@
-# Dotfiles for **[Charlie Dedinsky](mailto:dedin005@umn.edu)**
+# dotfiles
 
-* Most likely going to grow as I use vim for more server development
+Arch Linux / Hyprland desktop configuration.
 
-* I have forgone the addition of a **.zshrc** since I haven't landed on a configuration that I like completely
+## contents
+
+- `hypr/` - Hyprland, hypridle, hyprlock configs
+- `waybar/` - statusbar config and styles
+- `nvim/` - neovim config (lazy.nvim)
+- `shell/` - bashrc, bash_profile, aliases
+- `git/` - gitconfig
+- `scripts/` - standalone tools (recon.py etc)
+
+## install
+
+```bash
+git clone https://github.com/dedin005/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+bash install.sh
+```
+
+First run of neovim will auto-install plugins via lazy.nvim.
+
+## notes
+
+- Hyprland keybinds use ALT as main modifier
+- Lock: SUPER+L, display off: SUPER+SHIFT+L
+- Audio via PipeWire/WirePlumber, default sink set to HDMI
+- SSH accessible via cloudflare tunnel at ssh.ncdedinsky.com
