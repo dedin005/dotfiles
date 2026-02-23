@@ -1,0 +1,104 @@
+// =============================================================================
+// Waybar configuration for Hyprland
+// =============================================================================
+{
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+
+    "modules-left": [
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "hyprland/window"
+    ],
+    "modules-right": [
+        "network",
+        "memory",
+        "cpu",
+        "temperature",
+        "pulseaudio",
+        "tray",
+        "clock#date",
+        "clock#time"
+    ],
+
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": false,
+        "format": "{icon}",
+        "format-icons": {
+            "active": "",
+            "default": "",
+            "urgent": ""
+        }
+    },
+
+    "hyprland/window": {
+        "format": "{}",
+        "max-length": 120
+    },
+
+    "clock#time": {
+        "interval": 1,
+        "format": "{:%H:%M:%S}",
+        "tooltip": false
+    },
+
+    "clock#date": {
+        "interval": 10,
+        "format": " {:%e %b %Y}",
+        "tooltip-format": "{:%e %B %Y}"
+    },
+
+    "cpu": {
+        "interval": 5,
+        "format": " {usage}% ({load})",
+        "states": {
+            "warning": 70,
+            "critical": 90
+        }
+    },
+
+    "memory": {
+        "interval": 5,
+        "format": " {}%",
+        "states": {
+            "warning": 70,
+            "critical": 90
+        }
+    },
+
+    "network": {
+        "interval": 5,
+        "format-wifi": " {essid} ({signalStrength}%)",
+        "format-ethernet": " {ifname}: {ipaddr}/{cidr}",
+        "format-disconnected": " Disconnected",
+        "tooltip-format": "{ifname}: {ipaddr}"
+    },
+
+    "pulseaudio": {
+        "scroll-step": 5,
+        "format": "{icon} {volume}%",
+        "format-bluetooth": " {volume}%",
+        "format-bluetooth-muted": " ",
+        "format-muted": "",
+        "format-icons": {
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+
+    "temperature": {
+        "critical-threshold": 80,
+        "interval": 5,
+        "format": "{icon} {temperatureC}°C",
+        "format-icons": ["", "", "", "", ""],
+        "tooltip": true
+    },
+
+    "tray": {
+        "icon-size": 21,
+        "spacing": 10
+    }
+}
