@@ -26,4 +26,3 @@ First run of neovim will auto-install plugins via lazy.nvim.
 - Hyprland keybinds use ALT as main modifier
 - Lock: SUPER+L, display off: SUPER+SHIFT+L
 - Audio via PipeWire/WirePlumber, default sink set to HDMI
-- SSH accessible via cloudflare tunnel at ssh.ncdedinsky.com
