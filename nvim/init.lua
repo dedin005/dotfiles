@@ -39,9 +39,13 @@ require("lazy").setup({
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
-      require("nvim-treesitter.configs").setup({
+      local ok, configs = pcall(require, "nvim-treesitter.configs")
+      if not ok then return end
+      configs.setup({
         ensure_installed = { "python", "lua", "javascript", "typescript", "bash", "json", "yaml", "markdown" },
+        auto_install = true,
         highlight = { enable = true },
         indent = { enable = true },
       })
@@ -62,29 +66,23 @@ require("lazy").setup({
     end,
   },
 
-  -- LSP
+  -- Mason (LSP server installer)
   {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-    },
+    "williamboman/mason.nvim",
     config = function()
       require("mason").setup()
+    end,
+  },
+
+  -- Mason + nvim LSP bridge (installs servers, registers with vim.lsp.config)
+  {
+    "williamboman/mason-lspconfig.nvim",
+    dependencies = { "williamboman/mason.nvim" },
+    config = function()
       require("mason-lspconfig").setup({
         ensure_installed = { "pyright", "lua_ls", "ts_ls", "bashls" },
         automatic_installation = true,
       })
-      local lspconfig = require("lspconfig")
-      for _, server in ipairs({ "pyright", "lua_ls", "ts_ls", "bashls" }) do
-        lspconfig[server].setup({})
-      end
-      vim.keymap.set("n", "gd", vim.lsp.buf.definition)
-      vim.keymap.set("n", "K",  vim.lsp.buf.hover)
-      vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
-      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action)
-      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
-      vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
     end,
   },
 
@@ -158,6 +156,36 @@ require("lazy").setup({
     config = function() require("which-key").setup() end,
   },
 
+}, {
+  checker = { enabled = false },
+})
+
+-- =============================================================================
+-- LSP (new vim.lsp.config API, nvim 0.11+)
+-- =============================================================================
+vim.lsp.config("pyright", {})
+vim.lsp.config("ts_ls", {})
+vim.lsp.config("bashls", {})
+vim.lsp.config("lua_ls", {
+  settings = {
+    Lua = {
+      diagnostics = { globals = { "vim" } },
+    },
+  },
+})
+vim.lsp.enable({ "pyright", "ts_ls", "bashls", "lua_ls" })
+
+-- LSP keymaps on attach
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(ev)
+    local opts = { buffer = ev.buf }
+    vim.keymap.set("n", "gd",        vim.lsp.buf.definition,   opts)
+    vim.keymap.set("n", "K",         vim.lsp.buf.hover,        opts)
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename,      opts)
+    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+    vim.keymap.set("n", "[d",        vim.diagnostic.goto_prev, opts)
+    vim.keymap.set("n", "]d",        vim.diagnostic.goto_next, opts)
+  end,
 })
 
 -- =============================================================================
